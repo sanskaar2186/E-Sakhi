@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>E-Sakhi Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #cf9b7b, #e5f6ff);
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      background-color:#f8c093; 
+      color: white;
+      padding: 1rem 2rem;
+    }
+
+    .header img {
+      height: 60px;
+      width: 60px;
+      object-fit: contain;
+      border-radius: 50%;
+      margin-right: 1rem;
+      background-color: white;
+      padding: 5px;
+    }
+
+    .header-title {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 2rem auto;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      flex: 1;
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 2px solid #ccc;
+    }
+
+    .upload-label {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #0077b5;
+      cursor: pointer;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .main-content {
+      flex: 2;
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.7rem;
+      width: 100%;
+      font-size: 1rem;
+      background-color:#f8c093;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f91;
+    }
+
+    .summary-section h3 {
+      margin-top: 2rem;
+      border-top: 1px solid #ddd;
+      padding-top: 1rem;
+    }
+
+    .summary-section p {
+      margin: 0.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .header-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with Logo and Stylish Title -->
+  <div class="header">
+    <img src="logooooooooooooo.jpg" alt="E-Sakhi Logo" id="logo">
+    <div class="header-title">{{user}}</div>
+  </div>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <img src="https://via.placeholder.com/120" alt="Profile Picture" id="profileImage" class="profile-pic">
+      <label class="upload-label" for="imageUpload">Upload Photo</label>
+      <input type="file" id="imageUpload" accept="image/*">
+
+      <form id="profileForm">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="role">Role:</label>
+        <select id="role" required>
+          <option value="">-- Select Role --</option>
+          <option value="Learner">Learner</option>
+          <option value="Mentor">Mentor</option>
+          <option value="Entrepreneur">Entrepreneur</option>
+        </select>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" required>
+
+        <button type="submit">Save Profile</button>
+      </form>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <label for="address">Address:</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <label for="hobbies">Hobbies:</label>
+      <input type="text" id="hobbies" placeholder="e.g., Painting, Coding, Reading">
+
+      <div class="summary-section" id="outputSection" style="display:none;">
+        <h3>Profile Summary</h3>
+        <p><strong>Name:</strong> <span id="outName"></span></p>
+        <p><strong>Role:</strong> <span id="outRole"></span></p>
+        <p><strong>Date of Birth:</strong> <span id="outDOB"></span></p>
+        <p><strong>Address:</strong> <span id="outAddress"></span></p>
+        <p><strong>Hobbies:</strong> <span id="outHobbies"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const profileImage = document.getElementById('profileImage');
+    const imageUpload = document.getElementById('imageUpload');
+
+    imageUpload.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profileImage.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    const form = document.getElementById('profileForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const role = document.getElementById('role').value;
+      const dob = document.getElementById('dob').value;
+      const address = document.getElementById('address').value;
+      const hobbies = document.getElementById('hobbies').value;
+
+      document.getElementById('outName').textContent = name;
+      document.getElementById('outRole').textContent = role;
+      document.getElementById('outDOB').textContent = dob;
+      document.getElementById('outAddress').textContent = address;
+      document.getElementById('outHobbies').textContent = hobbies;
+
+      document.getElementById('outputSection').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

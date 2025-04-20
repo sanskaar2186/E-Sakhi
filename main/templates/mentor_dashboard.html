@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mentor Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+    }
+
+    /* Background container for 3D animation */
+    #background {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background-color: #2c3e50;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 2rem 1rem;
+      z-index: 1;
+    }
+
+    .sidebar h2 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ecf0f1;
+      text-decoration: none;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #34495e;
+    }
+
+    .sidebar a.logout {
+      color: #e74c3c;
+    }
+
+    /* Main Dashboard Area */
+    .main {
+      margin-left: 240px;
+      padding: 2rem;
+      flex-grow: 1;
+      position: relative;
+      z-index: 2;
+    }
+
+    .welcome {
+      font-size: 1.6rem;
+      font-weight:bold;=
+      margin-bottom: 1rem;
+      color:rgb(27, 27, 56);
+      text-align: center;;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background-color: #b5b5b598;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      backdrop-filter: blur(10px);
+      color:rgb(4, 4, 32)
+    }
+
+    .actions {
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-info {
+      background-color: #17a2b8;
+      color: white;
+    }
+
+    h5 {
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .list-group {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list-group-item {
+      background-color: #ffffffcc;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated background -->
+  <div id="background"></div>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>MentorPanel</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">My Profile</a>
+    <a href="{{url_for('view_pitches')}}">pitchs</a>
+    <a href="#">Courses</a>
+    <a href="#">Sessions</a>
+    <a href="{{url_for('logout')}}" class="logout">Logout</a>
+  </div>
+
+  <!-- Main Dashboard Content -->
+  <div class="main">
+    <p class="welcome">Welcome, {{name}}!</p>
+
+    <div class="grid">
+      <div class="card">
+        <h5>Total Courses</h5>
+        <p>5</p>
+      </div>
+      <div class="card">
+        <h5>Total Students</h5>
+        <p>38</p>
+      </div>
+      <div class="card">
+        <h5>Upcoming Sessions</h5>
+        <p>2</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary"  onclick="window.location.href='{{'add_course'}}'">Create New Course</button>
+      <button class="btn btn-secondary">Manage Courses</button>
+      <button class="btn btn-info">View Learner Progress</button>
+    </div>
+
+    <h5>Recent Courses</h5>
+    <ul class="list-group">
+      <li class="list-group-item">Introduction to Coding</li>
+      <li class="list-group-item">Creative Thinking Workshop</li>
+      <li class="list-group-item">Digital Literacy Basics</li>
+    </ul>
+  </div>
+
+  <!-- VANTA.js Background Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  <script>
+    VANTA.NET({
+      el: "#background",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0x0f8cff,
+      backgroundColor: 0xf5f5f5,
+      points: 12.00,
+      maxDistance: 20.00,
+      spacing: 16.00
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Role</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 100px;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .role-btn {
+      margin: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .role-btn:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome {{ name }}</h2>
+    <p>Please select your role:</p>
+    <form method="POST">
+      <button name="role" value="mentor" class="role-btn">I am a Mentor</button>
+      <button name="role" value="learner" class="role-btn">I am a Learner</button>
+    </form>
+  </div>
+</body>
+</html>

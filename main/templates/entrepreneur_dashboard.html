@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Entrepreneur Dashboard</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f5f5f5;
+        display: flex;
+      }
+
+      #background {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .sidebar {
+        width: 240px;
+        background-color: #363638cc;
+        color: white;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 2rem 1rem;
+        z-index: 1;
+      }
+
+      .sidebar h2 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .sidebar a {
+        display: block;
+        color: #ecf0f1;
+        text-decoration: none;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        transition: background-color 0.3s ease;
+      }
+
+      .sidebar a:hover {
+        background-color: #34495e;
+      }
+
+      .sidebar a.logout {
+        color: #e74c3c;
+      }
+
+      .main {
+        margin-left: 240px;
+        padding: 2rem;
+        flex-grow: 1;
+        position: relative;
+        z-index: 2;
+      }
+
+      .welcome {
+        font-size: 1.6rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: rgb(27, 27, 56);
+        text-align: center;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .card {
+        background-color: #363638cc;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        backdrop-filter: blur(10px);
+        color: rgb(228, 228, 233);
+      }
+
+      .actions {
+        margin-bottom: 2rem;
+      }
+
+      .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .btn-secondary {
+        background-color: #1c2a36;
+        color: white;
+      }
+
+      .btn-info {
+        background-color: #17a2b8;
+        color: white;
+      }
+
+      h5 {
+        margin-bottom: 1rem;
+        color: #fff;
+      }
+
+      .list-group {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .list-group-item {
+        background-color: #ffffffcc;
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(10px);
+        text-align: left;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+
+      /* Pitch section styling */
+      .pitch-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .pitch-section .card {
+        flex: 1;
+        min-width: 300px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 3D background -->
+    <div id="background"></div>
+    {{stage}}
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>EntrepreneurHub</h2>
+      <a href="#">Dashboard</a>
+      <a href="#">My Profile</a>
+      <a href="#" class="logout">Logout</a>
+    </div>
+
+    <!-- Main Dashboard Content -->
+    <div class="main">
+      <p class="welcome">Welcome, Entrepreneur!</p>
+
+      <div class="grid">
+        <div class="card">
+          <h5>Total Projects</h5>
+          <p>3</p>
+        </div>
+        <div class="card">
+          <h5>Mentor Feedbacks</h5>
+          <p>7</p>
+        </div>
+        <div class="card">
+          <h5>Active Pitches</h5>
+          <p>2</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary">Start New Idea</button>
+        <button class="btn btn-secondary">Browse Mentors</button>
+        <button class="btn btn-info">Review Feedback</button>
+      </div>
+
+      <!-- Startup Pitch Form + History -->
+      <div class="pitch-section">
+        <!-- Pitch Form -->
+        <div class="card">
+          <h3>Submit Your Startup Pitch</h3>
+          <form id="startupPitchForm" method="POST" action="/submit_pitch">
+            <label for="startupName">Startup Name:</label>
+            <input type="text" id="startupName" name="startup_name" required />
+
+            <label for="ideaDescription">Idea Description:</label>
+            <textarea
+              id="ideaDescription"
+              name="description"
+              rows="4"
+              required
+            ></textarea>
+
+            <label for="sector">Sector/Industry:</label>
+            <input type="text" id="sector" name="sector" required />
+
+            <label for="stage">Startup Stage:</label>
+            <select id="stage" name="stage" required>
+              <option value="">Select</option>
+              <option value="Idea Stage">Idea Stage</option>
+              <option value="Prototype">Prototype</option>
+              <option value="Early Traction">Early Traction</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Submit Pitch</button>
+          </form>
+        </div>
+
+        <!-- Pitch History -->
+        <div class="card">
+          <h3>Past Startup Pitches</h3>
+          <ul class="list-group" id="pastPitchesList">
+            {% for pitch in pitches %}
+            <li class="list-group-item">
+              <p><strong>Startup Name:</strong> {{ pitch.title }}</p>
+              <p><strong>Description:</strong> {{ pitch.description }}</p>
+              <p><strong>Sector:</strong> {{ pitch.sector }}</p>
+              <p><strong>Stage:</strong> {{ pitch.stage }}</p>
+              <p>
+                <strong>Submitted At:</strong> {{
+                pitch.submitted_at.strftime('%Y-%m-%d %H:%M:%S') if
+                pitch.submitted_at else 'N/A' }}
+              </p>
+              {% if pitch.ratings and pitch.ratings|length > 0 %}
+              <p>
+                <strong>Mentor Rating:</strong> {{ pitch.ratings[0].rating }} ★
+              </p>
+              <p><strong>Comment:</strong> {{ pitch.ratings[0].comment }}</p>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- VANTA.js Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script>
+      VANTA.NET({
+        el: "#background",
+        mouseControls: true,
+        touchControls: true,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0x0f8cff,
+        backgroundColor: 0xf5f5f5,
+        points: 12.0,
+        maxDistance: 20.0,
+        spacing: 16.0,
+      });
+
+      // Handle pitch submission
+    </script>
+  </body>
+</html>

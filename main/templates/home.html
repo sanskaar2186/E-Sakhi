@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>  ई-सखी  </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  body {
+    background: linear-gradient(to right, #cf9b7b, #e5f6ff);
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 60px;
+      background-color: white;
+      border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .logo {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 22px;  /* Increased font size */
+  }
+  
+  .logo img {
+      margin-right: 10px;
+      width: 50px;   /* Larger logo */
+      height: 50px;
+  }
+  
+  .nav-links {
+      display: flex;
+      align-items: center;
+  }
+  
+  .nav-links a {
+      margin: 0 20px;  /* More spacing between nav items */
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;  /* Standardized font size */
+      font-weight: 400;
+      transition: color 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+      color: #567BFF;
+  }
+  .apply-btn {
+    background-color: #567BFF;
+    color: white;
+    padding: 10px 30px;  /* Larger button */
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.apply-btn:hover {
+    background-color: #4560d9;
+}
+
+    .why-choose-section {
+      background-color:white;
+      color: white;
+      padding: 60px 20px;
+      border-radius: 15px;
+      margin: 40px auto;
+      max-width: 1200px;
+      position: relative;
+    }
+
+    .why-choose-section h2 {
+      font-weight: bold;
+    }
+
+    .why-choose-section p {
+      font-size: 1.1rem;
+      margin-top: 15px;
+      max-width: 600px;
+    }
+
+    .play-button {
+      background-color: white;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+
+    .play-button i {
+      font-size: 30px;
+      color: #4358b1;
+    }
+
+    .illustration {
+      max-width: 100%;
+      border-radius: 15px;
+    }
+    .google-translate-element {
+      top: 20px;
+      left: 5000px;
+      z-index: 2000;
+    }
+  </style>
+  <style>
+    .partner-card {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      height: 100%;
+      transition: transform 0.2s ease;
+    }
+    .partner-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .partner-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #3b4a87;
+    }
+    .footer {
+      background-color: #657bd2;
+      color: white;
+      padding: 40px 0;
+    }
+    .footer h5 {
+      color: #ffffff;
+    }
+    .footer ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .footer ul li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo_e-shakti.jpg') }}" alt="ई-सखी Logo"> <a href="mainhome page.html"> ई-सखी </a>
+        </div>
+            
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="{{url_for('about_us')}}">About us</a>
+            <button class="apply-btn" onclick="window.location.href='{{url_for('signup')}}'">Start Now</button>
+        </div>
+    </nav>
+    
+    <div id="google_translate_element" style="position: fixed; top: 20px; left: 20px; z-index: 1000;"></div>
+
+<div class="container why-choose-section">
+  <div class="row align-items-center ">
+    <div class="col-md-6 text-center text-md-start">
+        <h1 class="text-start text-black px-5 ">Empowering Girls:</h1>
+        <h1 class="text-start text-black px-5 ">Through E Learning</h1>
+        <br>
+        <h6 class="text-secondary px-5 g-1"> Welcome to our digital Empowerment platform,</h6>
+        <h6 class="text-secondary px-5 g-1">designed to break barriers and uplift girls</h6>
+        <button class=" btn btn-primary m-5 g-1 ">Get Started</button>
+    </div>
+    <div class="col-md-6 mt-4 mt-md-0 text-center">
+      <img src="{{ url_for('static', filename='images/get_started.jpg')}}" alt="Mentor Illustration" class="illustration">
+    </div>
+  </div>
+</div>
+    <h1 class="text-black text-center">About Our Mission</h1>
+    <h6 class="text-secondary text-center"> Transforming Lives Throught Technology</h6>
+<div class="row  row-cols-sm-2 row-cols-lg-3 row-cols-1 p-2 ">
+    <div class="col ">
+        <div class="text-center bg-white border border-black p-lg-3 m-2">
+            <h5 class="text-black text-start"> Equipping</h5>
+            <h5 class="text-black text-start">Girls With Digital</h5>
+            <h6 class="text-secondary text-start">Cultivating a Supportive Community:</h6>
+            <h6 class="text-secondary text-start">Mentoring,Networking</h6>
+        </div>
+        </div>
+        <div class="col ">
+            <div class="text-center bg-white border border-black p-lg-3 m-2">
+                <h5 class="text-black text-start">Mentorship:</h5>
+                <h5 class="text-black text-start">Guiding You to</h5>
+                <h6 class="text-secondary text-start">Unlock Your Potential:Connect with</h6>
+                <h6 class="text-secondary text-start">Experienced Mentors and Peers,</h6>
+                <h6 class="text-secondary text-start">Explore Entrepreneurial</h6>
+            </div>
+            </div>
+            <div class="col ">
+                <div class="text-center bg-white border border-black p-lg-3 m-2">
+                    <h5 class="text-black text-start">Entrepreneurship:</h5>
+                    <h5 class="text-black text-start">Unleash Your</h5>
+                    <h6 class="text-secondary text-start">Embrace Your Entrepreneurial Spirit:</h6>
+                    <h6 class="text-secondary text-start">Access Our Suite of micro-</h6>
+                    <h6 class="text-secondary text-start">entrepreneurship tools</h6>
+                </div>
+                </div>
+                <div class="col ">
+                    <div class="text-center bg-white border border-black p-lg-3 m-2">
+                        <h5 class="text-black text-start p-2">Explore Our Programs</h5>
+                        <h6 class="text-secondary text-start">From digital literacy to entrepreneurship,</h6>
+                        <h6 class="text-secondary text-start">our comprehensive curriculum covers a</h6>
+                        <h6 class="text-secondary text-start">wide range of topics to empower girls</h6>
+                        <h6 class="text-secondary text-start">Discover how you can develop tangible</h6>
+                        <h6 class="text-secondary text-start">skills,access personalized mentorship</h6>
+                        <br>
+                        <div class="text-start">
+                        <button class="btn btn-primary">Join Now</button>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="col ">
+                        <div class="text-center bg-white border border-black p-lg-3 m-2">
+                            <h5 class="text-black text-start p-2">Enroll Today</h5>
+                            <h6 class="text-secondary text-start">Elevate Your Future: Our Mentorship</h6>
+                            <h6 class="text-secondary text-start">Programs connect you with industry leaders</h6>
+                            <h6 class="text-secondary text-start">and successful,role models who will provide </h6>
+                            <h6 class="text-secondary text-start">personalized guidance, support your</h6>
+                            <h6 class="text-secondary text-start">entrepreneurial ventures,and help you </h6>
+                            <h6 class="text-secondary text-start">navigate the digital landscope </h6>
+                            <br>
+                            <div class="text-start">
+                            <button class="btn btn-primary">Apply Now</button>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="col ">
+                            <div class="text-center bg-white border border-black p-lg-3 m-2">
+                                <h5 class="text-black text-start p-2">Start Your Journey</h5>
+                                <h6 class="text-secondary text-start">Unlock Your Entrepreneurial Potential: Our</h6>
+                                <h6 class="text-secondary text-start">platform offers a comprehensive suite of </h6>
+                                <h6 class="text-secondary text-start">tools and resources to help you develop </h6>
+                                <h6 class="text-secondary text-start">your business aoumen,access financing,</h6>
+                                <h6 class="text-secondary text-start">entrepreneurial ventures,and help you </h6>
+                                <h6 class="text-secondary text-start">and connect with potential customers</h6>
+                                <div class="text-start">
+                                <button class="btn btn-primary">Apply Now</button>
+                            </div>
+                            </div>
+                            </div>
+</div>
+<div class="container why-choose-section">
+  <div class="row align-items-center">
+    <div class="col-md-6 text-center text-md-start">
+      <div class="play-button mx-auto mx-md-0">
+        <i class="bi bi-play-fill"></i>
+      </div>
+      <h2 class="text-black">Why to Choose</h2>
+      <p class="text-black">At the heart of our platform is a deep commitment to empowering girls. We believe that by providing access to digital tools, education, and mentorship, we can break down barriers and create pathways for sustainable growth and inclusion.</p>
+      <a href="#" class="btn btn-dark mt-3 text-light" >Explore Now</a>
+    </div>
+    <div class="col-md-6 mt-4 mt-md-0 text-center ">
+      <img src="{{ url_for('static', filename='images/why_choose.jpg') }}"  alt="Mentor Illustration" class="illustration" >
+    </div>
+  </div>
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<div class="container why-choose-section ">
+    <h1 class="text-center text-black">Meet Our Mentors</h1>
+    <h6 class="text-center text-secondary">Guiding You to Success</h6>
+  <div class="row align-items-center">
+    <div class="col-md-6 mt-4 mt-md-0 text-center ">
+        <img src="{{ url_for('static', filename='images/enter.jpg') }}"  alt="Mentor Illustration" class="illustration" >
+      </div>
+    <div class="col-md-6 text-center text-md-start">
+      <h2 class="text-black">Entrepreneurship</h2>
+      <h2 class="text-black">in Action</h2>
+      <p class="text-black">Witness the power of entrepreneurship in action as our mentor share their inspiring stories and practical advice.Learn how to navigate the digital landscape.</p>
+      <a href="#" class="btn btn-primary mt-3 text-light" >Apply Now</a>
+    </div>
+    
+  </div>
+</div>
+<div class="container why-choose-section">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h2 class="text-black">Gamified Learning Progress</h2>
+        <h3 class="text-black">From Badges to Breakthroughs</h3>
+        <p class="text-secondary">
+          Badges, leaderboards, and rewards inspire girls to complete lessons with enthusiasm. 
+          Progress is tracked in real time using Firebase Analytics, enabling mentors to offer 
+          personalized support to those who need it most. Each badge earned isn't just a win—it's a step toward empowerment.
+        </p>
+        <a href="#" class="btn btn-primary mt-3">Track Progress</a>
+        
+      </div>
+      <div class="col-md-6 mt-4 mt-md-0 text-center">
+        <img src="{{ url_for('static', filename='images/test.jpg') }}" alt="Mentor Illustration" class="illustration">
+      </div>
+    </div>
+  </div>
+<div class="container why-choose-section">
+    <div class="row align-items-center">
+      
+      <div class="col-md-6 mt-4 mt-md-0 text-center">
+        <img src="{{ url_for('static', filename='images/unlock.jpg') }}" alt="Mentor Illustration" class="illustration">
+      </div>
+      <div class="col-md-6 text-center text-md-start">
+          <h2 class="text-black">Unlocking Digital</h2>
+          <h2 class="text-black">Opportunities</h2>
+          <h2 class="text-black">for Girls</h2>
+          <p class="text-secondary">Explore our comprehensive suite of e-learning courses, skill-building workshops</p>
+          <a href="#" class="btn btn-primary mt-3">Get Started</a>
+      </div>
+    </div>
+  </div>
+  </body>
+  </html>
+ <h1 class="text-black text-center">Our Partners</h1>
+<h6 class="text-secondary text-center">Driving Digital Inclusion</h6>
+<div class="container py-5">
+  <div class="row justify-content-center g-4">
+    
+    <div class="col-md-4 border border-black">
+      <div class="partner-card text-center">
+        <i class="bi bi-mortarboard partner-icon"></i>
+        <h5>Sanjay Ghodawat University (SGU)</h5>
+        <p>
+          Supporting our mission with academic insights and institutional collaboration.<br>
+          Located at Kolhapur - Sangli Highway, A/p Atigre, Hatkanangale, Kolhapur - 416118, Maharashtra, India.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4 border border-black">
+      <div class="partner-card text-center">
+        <i class="bi bi-google partner-icon"></i>
+        <h5>Google</h5>
+        <p>
+          Partnering with us to provide cutting-edge cloud-based solutions and digital services.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    
+  <!-- Footer -->
+  <footer class="footer mt-5">
+      <div class="container">
+        <div class="row text-white">
+          <div class="col-md-3">
+              <p><i class="fas fa-copyright me-1"></i>2025 RuralGirlsRise, Inc.<br>All rights reserved.</p>
+          </div>
+          <div class="col-md-3">
+            <h5>Quick Links</h5>
+            <ul>
+              <li><i class="bi bi-house-door me-2"></i>Home</li>
+              <li><i class="bi bi-info-circle me-2"></i>About</li>
+              <li><i class="bi bi-lightbulb me-2"></i>Programs</li>
+              <li><i class="bi bi-envelope me-2"></i>Contact</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h5>Connect With Us</h5>
+            <ul>
+              <li><i class="bi bi-facebook me-2"></i>Facebook</li>
+              <li><i class="fab fa-twitter"></i> Twitter</li>
+              <li><i class="bi bi-instagram me-2"></i>Instagram</li>
+              <li><i class="bi bi-linkedin me-2"></i>LinkedIn</li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h5>Get in Touch</h5>
+            <ul>
+              <li><i class="bi bi-envelope-at me-2"></i>Email</li>
+              <li><i class="bi bi-telephone me-2"></i>Phone</li>
+              <li><i class="bi bi-geo-alt me-2"></i>Address</li>
+              <li><i class="bi bi-map me-2"></i>Map</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi,kn,te,ta,bn,ml,gu,mr,pa,ur,zh-CN,fr,es,de',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          },
+          'google_translate_element'
+        );
+      }
+    </script>
+    
+    <script type="text/javascript" 
+            src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+    
+</body>
+</html>

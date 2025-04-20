@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+      body {
+        background: linear-gradient(to right, #f8af65, #e5f6ff);
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+      }
+
+      .card {
+        background-color: transparent);
+        padding: 2rem 3rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(172, 129, 51, 0.1);
+        text-align: center;
+        width: 300px;
+      }
+
+      .card h2 {
+        margin-bottom: 1.5rem;
+      }
+
+      .card input,
+      .card select {
+        width: 100%;
+        padding: 0.6rem;
+        margin: 0.5rem 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+
+      .card button {
+        width: 100%;
+        padding: 0.7rem;
+        margin-top: 0.8rem;
+        border: none;
+        border-radius: 8px;
+        background-color: #03021d;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .card button:hover {
+        background-color: #574fd6;
+      }
+
+      .card p {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .card a {
+        color: #6c63ff;
+        text-decoration: none;
+      }
+
+      .card a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Login</h2>
+
+      <input type="email" id="email" placeholder="Email" required /><br />
+      <input type="password" id="password" placeholder="Password" required /><br />
+
+      <label for="role">I am a:</label>
+      <select id="role">
+        <option value="learner">Learner</option>
+        <option value="mentor">Mentor</option>
+      </select><br />
+
+      <button onclick="login()">Login</button>
+
+      <p>Don't have an account? <a href="{{url_for('signup')}}">Sign up</a></p>
+    </div>
+  </body>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCMY1bORAi47P8BIrjYEZwftXC98NVt5Bw",
+        authDomain: "final-605dd.firebaseapp.com",
+        projectId: "final-605dd",
+        storageBucket: "final-605dd.firebasestorage.app",
+        messagingSenderId: "174834812202",
+        appId: "1:174834812202:web:829a313f8b0d41bd34ca53",
+        measurementId: "G-GM41HE291V",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      // Login function
+      function login() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const role = document.getElementById("role").value;
+      
+        console.log("Sending role to backend: ", role);  // Added this line to check the role
+      
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            return userCredential.user.getIdToken();  // Get Firebase ID Token  
+          })
+          .then((idToken) => {
+            // Send ID Token and role to backend for verification
+            return fetch("/session_Login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ idToken: idToken, role: role }),
+            });
+          })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("Backend response: ", data);  // Added this line to verify the backend response
+            if (data.success) {
+              // Check the role and redirect
+              if (data.role === "mentor") {
+                window.location.href = "mentor_dashboard";
+              } else {
+                window.location.href = "learner_dashboard";
+              }
+            } else {
+              alert("Login failed: " + data.message);
+            }
+          })
+          .catch((error) => {
+            alert("Login failed: " + error.message);
+          });
+      }
+
+  
+      async function signInWithGoogle() {
+        try {
+          const result = await auth.signInWithPopup(provider);
+          const user = result.user;
+  
+          const userRef = db.collection("users").doc(user.uid);
+          const doc = await userRef.get();
+  
+          if (!doc.exists) {
+            // Add new user with role = 'learner'
+            await userRef.set({
+              uid: user.uid,
+              name: user.displayName,
+              email: user.email,
+              photoURL: user.photoURL,
+              role: "learner",
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            console.log("✅ New user created with role learner");
+            window.location.href = "{{url_for('learner_dashboard')}}";
+          } else {
+            console.log("✅ Existing user logged in");
+            window.location.href = "{{url_for('learner_dashboard')}}";
+          }
+  
+          // Redirect to learner_dashboard.html
+          window.location.href = "{{url_for('learner_dashboard')}}"
+  
+        } catch (error) {
+          console.error("❌ Sign-in error:", error);
+          alert("Login failed: " + error.message);
+        }
+      }
+      
+      
+    </script>
+  </body>
+</html>
